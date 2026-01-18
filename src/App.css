@@ -1,0 +1,6 @@
+.iconButton:hover {
+  background-color: rgb(204, 240, 195) !important;
+}
+.deleteButton{
+  color: red !important;
+}
