@@ -71,8 +71,8 @@ export default function TodoList() {
         }}
       >
         <CardContent>
-          <Typography variant="h2" sx={{ textAlign: "center" }}>
-            مهامي
+          <Typography variant="h3" sx={{ textAlign: "center" }}>
+           نعيم مهامي
           </Typography>
           <Divider sx={{ marginTop: "-10px" }} />
           <ToggleButtonGroup
