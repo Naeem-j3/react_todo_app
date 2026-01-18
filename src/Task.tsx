@@ -14,9 +14,16 @@ import {
 import Card from "@mui/material/Card";
 import { useContext, useState } from "react";
 import { TasksContext } from "./contexts/TaskContext";
+interface TaskProps {
+  task: {
+    id: string;
+    title: string;
+    details: string;
+    status: boolean;
+  };
+}
 
-
-export default function Task({ task }) {
+export default function Task({ task }: TaskProps) {
  const context = useContext(TasksContext);
 if (!context) {
   throw new Error("TasksContext must be used within a TasksContext.Provider");
