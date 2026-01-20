@@ -1,6 +1,5 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import Snackbar, { type SnackbarCloseReason } from "@mui/material/Snackbar";
+
+import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
 
 export default function AutohideSnackbar({
