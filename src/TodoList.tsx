@@ -22,6 +22,8 @@ import Task from "./Task";
 import { useContext } from "react";
 import { TasksContext, type TaskType } from "./contexts/TaskContext";
 import { v4 as uuid } from "uuid";
+import { SnackbarContext } from "./contexts/SncackbarContext";
+
 export default function TodoList() {
   const [alignment, setAlignment] = useState("الكل");
   const [input, setInput] = useState("");
@@ -33,7 +35,12 @@ export default function TodoList() {
     title: "",
     details: "",
   });
-
+  const snackbar = useContext(SnackbarContext);
+  if (!snackbar) {
+    throw new Error(
+      "SnackbarContext must be used within SnackbarContext.Provider",
+    );
+  }
   if (!context) {
     throw new Error("TasksContext must be used within a TasksContext.Provider");
   }
@@ -64,6 +71,9 @@ export default function TodoList() {
     setTask(updated);
     localStorage.setItem("tasks", JSON.stringify(updated));
     handleClose();
+  
+      snackbar?.showHideSnackbar("تم تاحذف بنجاح");
+    
   }
   //edit dialog
   function handleClickOpenEdit(task: TaskType) {
@@ -76,7 +86,6 @@ export default function TodoList() {
   }
   const handleCloseEdit = () => {
     setOpenEdit(false);
-  
   };
   const handledit = () => {
     if (!taskDialog || !editForm) return;
@@ -90,6 +99,7 @@ export default function TodoList() {
     setTask(updated);
     localStorage.setItem("tasks", JSON.stringify(updated));
     handleCloseEdit();
+     snackbar?.showHideSnackbar("تم التعديل بنجاح");
   };
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -272,6 +282,8 @@ export default function TodoList() {
                       { id: uuid(), title: input, details: "", status: false },
                     ]);
                     localStorage.setItem("tasks", JSON.stringify(tasks));
+
+                    snackbar.showHideSnackbar("تمت الاضافة بنجاح");
                   }}
                   disabled={input.length == 0}
                 >
