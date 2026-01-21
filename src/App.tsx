@@ -4,8 +4,7 @@ import { TasksContext } from "./contexts/TaskContext";
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
 
-import Snackbar from "./Snackbar";
-import { SnackbarContext } from "./contexts/SncackbarContext";
+import {SnackbarProvider } from "./contexts/SncackbarContext";
 function App() {
   const [tasks, setTask] = useState([
     {
@@ -21,18 +20,10 @@ function App() {
       status: false,
     },
   ]);
-  const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  function showHideSnackbar(message:string) {
-    setOpen(true);
-    setMessage(message)
-    setTimeout(() => {
-      setOpen(false);
-    }, 3000);
-  }
+
   return (
     <TasksContext.Provider value={{ tasks, setTask }}>
-      <SnackbarContext.Provider value={{ showHideSnackbar }}>
+      <SnackbarProvider>
         <div
           style={{
             height: "100vh",
@@ -44,11 +35,8 @@ function App() {
           }}
         >
           <TodoList />
-
-          
         </div>
-        <Snackbar open={open} message={message}/>
-      </SnackbarContext.Provider>
+      </SnackbarProvider>
     </TasksContext.Provider>
   );
 }

@@ -3,7 +3,7 @@ import { CardContent, IconButton, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import { TasksContext, type TaskType } from "./contexts/TaskContext";
 import { useContext } from "react";
-import { SnackbarContext } from "./contexts/SncackbarContext";
+import { useSnackbar } from "./contexts/SncackbarContext";
 
 interface TaskProps {
   task: TaskType;
@@ -16,15 +16,19 @@ export default function Task({ task, handleClickOpen, openEdit }: TaskProps) {
   if (!context) {
     throw new Error("TasksContext must be used within a TasksContext.Provider");
   }
+  const snackbar = useSnackbar();
   const { tasks, setTask } = context;
-  const snackbar = useContext(SnackbarContext);
+
   function handelCheck() {
-    const updated = tasks.map((t) =>
-      t.id === task.id ? { ...t, status: !t.status } : t,
-    );
+    const updated = tasks.map((t) => {
+      if (t.id == task.id) {
+        t.status = !task.status;
+      }
+      return t;
+    });
     setTask(updated);
     localStorage.setItem("tasks", JSON.stringify(updated));
-    snackbar?.showHideSnackbar("تم التعديل بنجاح");
+    snackbar.showHideSnackbar("تم التحديث بنجاح");
   }
 
   const handelOpenDelete = () => {

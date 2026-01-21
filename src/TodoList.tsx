@@ -22,7 +22,7 @@ import Task from "./Task";
 import { useContext } from "react";
 import { TasksContext, type TaskType } from "./contexts/TaskContext";
 import { v4 as uuid } from "uuid";
-import { SnackbarContext } from "./contexts/SncackbarContext";
+import {useSnackbar } from "./contexts/SncackbarContext";
 
 export default function TodoList() {
   const [alignment, setAlignment] = useState("الكل");
@@ -35,12 +35,7 @@ export default function TodoList() {
     title: "",
     details: "",
   });
-  const snackbar = useContext(SnackbarContext);
-  if (!snackbar) {
-    throw new Error(
-      "SnackbarContext must be used within SnackbarContext.Provider",
-    );
-  }
+  const snackbar = useSnackbar();
   if (!context) {
     throw new Error("TasksContext must be used within a TasksContext.Provider");
   }
@@ -72,7 +67,7 @@ export default function TodoList() {
     localStorage.setItem("tasks", JSON.stringify(updated));
     handleClose();
   
-      snackbar?.showHideSnackbar("تم تاحذف بنجاح");
+      snackbar.showHideSnackbar("تم تاحذف بنجاح");
     
   }
   //edit dialog
